@@ -1,0 +1,1 @@
+[{"nombre":"shampoo","precio":200,"thumbnail":"ejemplo url","id":7}]
