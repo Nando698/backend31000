@@ -11,6 +11,7 @@ class Contenedor {
     
     let data = await fs.promises.readFile(`./${this.archivo}`, 'utf-8')
 
+      try {
         if(!data) {
             let id = JSON.parse(await fs.promises.readFile("./ids.txt", "utf-8"));
             let maxID = Math.max(...id);
@@ -40,33 +41,43 @@ class Contenedor {
     await fs.promises.writeFile(`./${this.archivo}`, JSON.stringify(productos));
 
     console.log("Producto agregado con el ID ", objeto.id);
-  }}
+  }} catch (error) {console.log('[[[ error en metodo save ]]]', error)}
+}
 
   /* METODO GET BY ID */
 
   async getById(id) {
+
     //Obtengo los productos del archivo
+    try {
     let productos = JSON.parse(
       await fs.promises.readFile("./productos.txt", "utf-8")
-    );
+      );
+      
 
     let objeto = productos.find((prod) => prod.id == id);
 
     console.log(objeto ? objeto : "ese ID no existe");
+      }catch(error) {console.log('[[[ error en metodo getById ]]]',error)}
   }
 
   /* METODO GETALL */
 
   async getAll() {
+
+    try {
     let productos = JSON.parse(
-      await fs.promises.readFile("./productos.txt", "utf-8")
+      await fs.promises.readFile("./productos.txxt", "utf-8")
     );
     console.log(productos);
-  }
+  } catch(error){console.log('[[[ error desde metodo getAll ]]]', error)}
+}
 
   /* METODO DELETE BY ID */
 
   async deleteById(id) {
+
+    try {
     let productos = JSON.parse(
       await fs.promises.readFile("./productos.txt", "utf-8")
     );
@@ -81,8 +92,8 @@ class Contenedor {
       console.log("producto eliminado");
     } else {
       console.log("no existe producto con ese id");
-    }
-  }
+    
+  }} catch(error){console.log('[[[ error desde metodo deleteAll ]]]', error)}}
 
   /* METODO DELETE ALL */
 
@@ -90,11 +101,16 @@ class Contenedor {
     
     try {
     
-    await fs.promises.writeFile(`./${this.archivo}`, "[]");
+    let archivo = await fs.promises.readFile(`./${this.archivo}`, 'utf-8')
 
-    console.log("Todos los archivos han sido eliminados");
+      if (!archivo) {
+        console.log('ese archivo no existe')} else {
+
+        await fs.promises.writeFile(`./${this.archivo}`, "[]");
+
+    console.log("Todos los archivos han sido eliminados")}
     }catch(error) {
-        console.log(error)
+        console.log('[[[ error desde metodo deleteAll ]]]', error)
     }
   }
 }
@@ -103,7 +119,7 @@ class Contenedor {
 
 //new Contenedor('productos.txt').save({nombre: 'shampoo', precio: 200, thumbnail: 'ejemplo url'})
 
-//new Contenedor('productos.txt').getById(8)
+//new Contenedor('productos.txt').getById(10)
 
 //new Contenedor('productos.txt').getAll()
 
