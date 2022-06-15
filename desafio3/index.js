@@ -2,7 +2,29 @@ const express = require('express')
 const fs = require('fs')
 const app = express()
 const port = 8080
-let fecha = new Date()
+
+
+const productos = [
+  {
+  "title": "Escuadra",
+  "price": 123.45,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+  "id": 1
+  },
+  {
+  "title": "Calculadora",
+  "price": 234.56,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+  "id": 2
+  },
+  {
+  "title": "Globo Terráqueo",
+  "price": 345.67,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+  "id": 3
+  }
+ ]
+
 
 class Contenedor {
     constructor(archivo) {
@@ -36,13 +58,13 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
     res.send(
 
-       ` <h1 style="color: blue" >Bienvenido al servidor de NNANDO</h1> `
+       ` <h1 style="color: blue" >Bienvenido al servidor de NANDO</h1> `
 
     )
 } )
 
 
-app.get('/productos', async (req, res) => {
+app.get('/api/productos', async (req, res) => {
     
     let productos = await new Contenedor('productos.txt').getAll()
     
@@ -58,6 +80,9 @@ app.get('/productos', async (req, res) => {
 } )
 
 
+
+
+
 app.get('/productoRandom', async (req, res) => {
     
     let productos = await new Contenedor('productos.txt').getAll()
@@ -70,5 +95,7 @@ app.get('/productoRandom', async (req, res) => {
 
     )
 } )
+
+
 
 

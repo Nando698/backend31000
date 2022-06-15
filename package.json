@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./desafio3/index.js"
+    "start": "nodemon ./desafio4/server.js"
   },
   "repository": {
     "type": "git",
