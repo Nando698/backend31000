@@ -24,13 +24,20 @@ const productos = [{
 
 //Mostrar productos (GET)
 router.get('/', (req, res) => {
-    res.json(productos);
+    
+    try{
+        res.json(productos);
+    }catch(error){
+        console.log('error al intentar obtener el listado de productos :: ',error)
+    }
 })
 
 
 
 //Agregar producto desde form (POST)
 router.post('/', (req, res) => {
+    
+try {
     const {
         title,
         price,
@@ -45,50 +52,57 @@ router.post('/', (req, res) => {
         thumbnail
     });
     res.send(productos[ultimo + 1]);
+}catch(error){
+    console.log('error al postear', error)
+    res.sendStatus(500)
+}
 })
 
 
 //Consultar producto (GET)
 router.get('/:id', (req, res) => {
+    
+   try { 
     let encontrado = productos.find(producto => producto.id == req.params.id);
-    let resultado;
-    if (encontrado) {
-        resultado = encontrado;
-    } else {
-        resultado = {
-            error: 'El producto no existe'
-        };
+    encontrado ? res.json(encontrado) : res.json({error: 'No existe ese ID'})
+    } catch(error) {
+        console.log('ocurrio un error desde el metodo GET por id, ', error)
     }
-    res.json(resultado);
-})
+    })
+
+ 
 
 
 //Actualizar producto via postman (PUT)
 router.put('/:id', (req, res) => {
-    
+try{
     const id = Number(req.params.id);
     const index = productos.findIndex(producto => producto.id === id)
     const oldProd = productos[index]
 
   
     if (productos.find((prod) => prod.id === id)) {
-      
-    
-      productos[index] = req.body
-      productos[index].id = id
-      
-  
-      res.json(`${JSON.stringify( oldProd )}   ha sido actualizado a:  ${JSON.stringify( productos[index] )}`);
+      productos[index] = req.body;
+      productos[index].id = id;
 
+      res.json(
+        `${JSON.stringify(oldProd)}   ha sido actualizado a:  ${JSON.stringify(
+          productos[index]
+        )}`
+      );
     } else {
       res.json(`El producto con el id: ${id} no existe`);
+    }
+}catch(error){
+    console.log('ha ocurrido un error en el metodo put')
 }
-
 })
 
 
 //Eliminar producto (DELETE)
 router.delete('/:id', (req, res) =>{
+    
+    try{
     const index = productos.findIndex((producto) => {
         return producto.id == req.params.id;
     });
@@ -100,6 +114,9 @@ router.delete('/:id', (req, res) =>{
         resultado = "Producto eliminado con éxito"
     }
     res.json(resultado);
+    }catch(error){
+        console.log('ha ocurrido un error en el metodo DELETE')
+    }
 })
 
 
