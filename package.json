@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./desafio5/hbs/server.js"
+    "start": "nodemon ./desafio5/ejs/server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,9 @@
     "nodemon": "^2.0.16"
   },
   "dependencies": {
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
-    "express-handlebars": "^6.0.6"
+    "express-handlebars": "^6.0.6",
+    "pug": "^3.0.2"
   }
 }

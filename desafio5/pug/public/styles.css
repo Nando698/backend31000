@@ -1,0 +1,41 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form * {
+    width: 200px;
+}
+
+body {
+    background-color: rgb(175, 186, 186);
+}
+
+nav {
+    display: inline-block;
+    width: 100%;
+    background-color: rgb(64, 40, 76);
+    box-shadow: 5px 0px 5px 5px;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    color: aliceblue;
+    display: flex;
+}
+
+
+
+.listContainer {
+    display: flex
+}
+
+.formContainer {
+    display: flex;
+}
+
+.card img {
+    max-width: 150px;
+}
