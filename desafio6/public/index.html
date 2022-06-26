@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+
+    <title>Backend comision 31000</title>
+</head>
+<body>
+    <form action="/api/productos" method="POST">
+        <input type="text" name="title" placeholder="Nombre">
+        <input type="text" name="price" placeholder="precio">
+        <input type="text" name="thumbnail" placeholder="url">
+
+        <input type="submit" value="Subir producto">
+        <input type="reset" value="Limpiar">
+    </form>
+    <div id="productos"></div>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../client.socket.js"></script>
+</body>
+</html> 
