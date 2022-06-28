@@ -36,6 +36,20 @@ nav ul {
     display: flex;
 }
 
-.card img {
-    max-width: 150px;
+img {
+    max-width: 50px;
+}
+
+h1, h2 {
+    font-size: 1rem;
+}
+
+.card {
+    padding: 20px;
+    background-color: brown;
+    width: 200px;
+}
+
+#productPool {
+    display: flex;
 }
