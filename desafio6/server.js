@@ -4,10 +4,15 @@ const path = require('path')
 const { Server: IOServer } = require('socket.io')
 const expressServer = app.listen(8080, () => console.log(`escuchando en puerto 8080`))
 const io = new IOServer(expressServer)
-const contenedor = require('./class.js')
+
 const fs = require("fs");
 const { Router } = require('express');
 const router = Router();
+const arrayMsj = []
+
+// Class
+const Contenedor = require('./class.js');
+let chat = new Contenedor;
 
 const products = [{
         title: "Escuadra",
@@ -44,15 +49,13 @@ io.on('connection', async socket => {
             products.push(product)
             io.emit('server:product', product)
 })
+
+        socket.emit('server:msgs', arrayMsj);
+        socket.on('client:msg', msgInfo => {
+            arrayMsj.push(msgInfo);
+            chat.save(msgInfo);
+            io.emit('server:msgs', arrayMsj)
+        })
+
 })
 
-/* io.on("connection", async socket => {
-    console.log("Nuevo usuario conectado")
-    socket.emit("server:productos", contenedorProductos.productos)
-
-    socket.on("client: producto", async producto =>{
-        contenedorProductos.save(producto)
-
-        io.emit("server:producto", producto)
-    })
-}) */
