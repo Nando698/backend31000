@@ -57,5 +57,9 @@ io.on('connection', async socket => {
             io.emit('server:msgs', arrayMsj)
         })
 
+        socket.on('cliente:typing', typeValue => {
+            socket.broadcast.emit('server:typing', typeValue)
+        })
+
 })
 

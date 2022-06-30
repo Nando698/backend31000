@@ -88,4 +88,20 @@ h1, h2 {
     height: 50px;
 }
 
+.nick {
+    color: blue;
+    font-weight: bold;
+}
 
+.dateText {
+    color: brown;
+}
+
+.msgText {
+    color: rgb(6, 141, 67);
+    font-style: italic;
+}
+
+#typingPool {
+    color: aqua;
+}

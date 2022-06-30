@@ -11,6 +11,7 @@
     <title>Backend comision 31000</title>
 </head>
 <body>
+    
     <form id="productForm">
         <input type="text" name="title" placeholder="Nombre" id="title">
         <input type="text" name="price" placeholder="precio" id="price">
@@ -23,14 +24,21 @@
     
     
     <div id="chatWindow">
-        <div id="msgPool"></div>
+        
+        <div id="msgPool"> 
+        </div>  
+        <div id="typingPool"></div>
+
+         
         <form id="formMsj">
-            <input type="email" placeholder="Inserte su correo" id="mailInput">
-            <input type="text" placeholder="Mensaje...." id="msjInput">
-            <input type="button" name="" class="btn btn-success" id="sendInput" value="Enviar">
+            <input type="email" placeholder="Inserte su correo" id="mailInput" required>
+            <input type="text" placeholder="Mensaje...." id="msjInput" required>
+            <input type="submit" name="" class="btn btn-success" id="sendInput" value="Enviar">
         </form>   
         
     </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
