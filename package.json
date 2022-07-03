@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./desafio6/server.js"
+    "start": "nodemon ./proyecto/src/server.js"
   },
   "repository": {
     "type": "git",
