@@ -210,14 +210,14 @@ class Contenedor {
 
       let producto = data_product.filter((prod) => prod.id == productID);
       let cart = data_cart.filter((cart) => cart.id == cartID);
-      let index = data_cart.findIndex((x) => x.id == cart.id);
+      let index = data_cart.findIndex((x) => x.id == cartID);
       
       data_cart[index].products.push(producto);
       data_cart.push(cart);
 
       await fs.promises.writeFile(
         `./proyecto/src/${this.database}.txt`,
-        JSON.stringify(cart)
+        JSON.stringify(data_cart)
       );
       res.send("agregado con exito");
     } catch (e) {
