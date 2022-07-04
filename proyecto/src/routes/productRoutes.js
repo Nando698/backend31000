@@ -1,28 +1,29 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
-const {getAll, getById}  = require('../controllers/prodControllers')
-
+const { getAll, getById, addProduct, updateProduct, deleteById} = require("../controllers/prodControllers");
 
 const Contenedor = require("../contenedor.js");
 const products_C = new Contenedor("productDB", "productsIds");
 
 
-/* router.get('/:id?' , (req, res) => {
-    const  { id } = req.params
-    
-    id ? res.send('hay id') : res.send('no hay id')
-} ) */
+
+router.get("/:id?", (req, res) => {
+  const { id } = req.params;
+
+  id ? getById(req.params.id, res) : getAll(res);
+});
 
 
+router.post('/', (req, res) => {
+    addProduct(req.body, res)
+})
 
-//router.get('/', getAll)
+router.put('/:id', (req, res) => {
+    updateProduct(req, res)
+})
 
-router.get('/:id?' , async (req, res) => {
-    const  { id } = req.params
-
-    id ? getById(id) : getAll
-    
-}) 
-
+router.delete('/:id', (req, res) => {
+    deleteById(req, res)
+})
 
 module.exports = router;

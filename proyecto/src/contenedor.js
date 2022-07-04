@@ -1,23 +1,30 @@
 const fs = require("fs");
 
 class Contenedor {
-  constructor(database,idDb) {
-    this.database = database
-    this.idDb = idDb
+  constructor(database, idDb) {
+    this.database = database;
+    this.idDb = idDb;
   }
 
   /* METODO SAVE */
 
-  async save(objeto) {
-    let data = await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8");
+  async save(objeto, res) {
+    let data = JSON.parse(
+      await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
+    );
 
     try {
       if (!data) {
-        let id = JSON.parse(await fs.promises.readFile(`./${this.idDb}.txt`, "utf-8"));
+        let id = JSON.parse(
+          await fs.promises.readFile(`./proyecto/src${this.idDb}.txt`, "utf-8")
+        );
         let maxID = Math.max(...id);
         objeto.id = maxID + 1;
         id = [...id, objeto.id];
-        await fs.promises.writeFile(`./${this.idDb}.txt`, JSON.stringify(id));
+        await fs.promises.writeFile(
+          `./proyecto/src${this.idDb}.txt`,
+          JSON.stringify(id)
+        );
 
         await fs.promises.writeFile(
           `./proyecto/src/${this.database}.txt`,
@@ -25,15 +32,23 @@ class Contenedor {
         );
       } else {
         // Obtengo ID desde un archivo independiente
-        let id = JSON.parse(await fs.promises.readFile(`./${this.idDb}.txt`, "utf-8"));
+        let id = JSON.parse(
+          await fs.promises.readFile(`./proyecto/src/${this.idDb}.txt`, "utf-8")
+        );
         let maxID = Math.max(...id);
         objeto.id = maxID + 1;
         id = [...id, objeto.id];
-        await fs.promises.writeFile(`./${this.idDb}.txt`, JSON.stringify(id));
+        await fs.promises.writeFile(
+          `./proyecto/src/${this.idDb}.txt`,
+          JSON.stringify(id)
+        );
 
         //Obtengo los productos del archivo
         let productos = JSON.parse(
-          await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
+          await fs.promises.readFile(
+            `./proyecto/src/${this.database}.txt`,
+            "utf-8"
+          )
         );
 
         //Agrego el producto y reescribo el archivo
@@ -44,7 +59,7 @@ class Contenedor {
           JSON.stringify(productos)
         );
 
-        console.log("Producto agregado con el ID ", objeto.id);
+        res.send("Agregado exitosamente");
       }
     } catch (error) {
       console.log("[[[ error en metodo save ]]]", error);
@@ -54,17 +69,16 @@ class Contenedor {
   /* METODO GET BY ID */
 
   async getById(id) {
-    //Obtengo los productos del archivo
-    let productos = JSON.parse(
+    //Obtengo los datos
+    let data = JSON.parse(
       await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
-      );
-      
-      try {
+    );
 
-      let objeto = productos.find((prod) => prod.id == id);
+    try {
+      let objeto = data.find((prod) => prod.id == id);
 
-      let resultado = objeto ? objeto : {error : 'No existe'}
-      return resultado
+      let resultado = objeto ? objeto : { error: "No existe" };
+      return resultado;
     } catch (error) {
       console.log("[[[ error en metodo getById ]]]", error);
     }
@@ -74,11 +88,14 @@ class Contenedor {
 
   async getAll() {
     try {
-      let productos = JSON.parse(await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8"))
-        
-        return productos
+      let productos = JSON.parse(
+        await fs.promises.readFile(
+          `./proyecto/src/${this.database}.txt`,
+          "utf-8"
+        )
+      );
 
-
+      return productos;
     } catch (error) {
       console.log("[[[ error desde metodo getAll ]]]", error);
     }
@@ -86,46 +103,125 @@ class Contenedor {
 
   /* METODO DELETE BY ID */
 
-  async deleteById(id) {
-    let productos = JSON.parse(
+  async deleteById(id, res) {
+    let data = JSON.parse(
       await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
-      );
-      
-      try {
-      
-        if (productos.some((prod) => prod.id == id)) {
-        let newProductos = productos.filter((prod) => prod.id != id);
+    );
+
+    try {
+      if (data.some((prod) => prod.id == id)) {
+        let newData = data.filter((prod) => prod.id != id);
 
         await fs.promises.writeFile(
           `./proyecto/src/${this.database}.txt`,
-          JSON.stringify(newProductos)
+          JSON.stringify(newData)
         );
-        console.log("producto eliminado");
+        res.send("Eliminado con exito");
       } else {
-        console.log("no existe producto con ese id");
+        res.send("no existe  ese id");
       }
     } catch (error) {
-      console.log("[[[ error desde metodo deleteAll ]]]", error);
+      console.log("[[[ error desde metodo deleteById ]]]", error);
     }
   }
 
   /* METODO DELETE ALL */
 
   async deleteAll() {
-    
-    let archivo = await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8");
-    
+    let archivo = await fs.promises.readFile(
+      `./proyecto/src/${this.database}.txt`,
+      "utf-8"
+    );
+
     try {
-    
       if (!archivo) {
         console.log("ese archivo no existe");
       } else {
-        await fs.promises.writeFile(`./proyecto/src/${this.database}.txt`, "[]");
+        await fs.promises.writeFile(
+          `./proyecto/src/${this.database}.txt`,
+          "[]"
+        );
 
         console.log("Todos los archivos han sido eliminados");
       }
     } catch (error) {
       console.log("[[[ error desde metodo deleteAll ]]]", error);
+    }
+  }
+
+  /* METODO UPDATE */
+
+  async updateProduct(product, id, res) {
+    try {
+      let data = JSON.parse(
+        await fs.promises.readFile(
+          `./proyecto/src/${this.database}.txt`,
+          "utf-8"
+        )
+      );
+      let index = data.findIndex((x) => x.id == id);
+
+      if (index !== -1) {
+        data[index] = product;
+        data[index].id = id;
+
+        await fs.promises.writeFile(
+          `./proyecto/src/${this.database}.txt`,
+          JSON.stringify(data)
+        );
+
+        res.send("Producto actualizado");
+      } else {
+        res.send("Ese id no existe");
+      }
+    } catch (e) {
+      console.log("[[ERROR DESDE METODO PUT]]", e);
+    }
+  }
+
+  /* METODO searchByCart */
+  async searchByCart(id, res) {
+    let data = JSON.parse(
+      await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
+    );
+
+    try {
+      let objeto = data.find((prod) => prod.id == id);
+
+      objeto ? res.send(objeto.products) : res.send("no existe");
+    } catch (error) {
+      console.log("[[[ error en metodo getById ]]]", error);
+    }
+  }
+
+  /* METODO AGREGAR PRODUCTO AL CARRITO */
+
+  async addProductToCart(cartID, productID, res) {
+    try {
+      let data_product = JSON.parse(
+        await fs.promises.readFile(`./proyecto/src/productDB.txt`, "utf-8")
+      );
+      let data_cart = JSON.parse(
+        await fs.promises.readFile(
+          `./proyecto/src/${this.database}.txt`,
+          "utf-8"
+        )
+      );
+
+      let producto = data_product.filter((prod) => prod.id == productID);
+      let cart = data_cart.filter((cart) => cart.id == cartID);
+      let index = data_cart.findIndex((x) => x.id == cart.id);
+      
+      data_cart[index].products.push(producto);
+      data_cart.push(cart);
+
+      await fs.promises.writeFile(
+        `./proyecto/src/${this.database}.txt`,
+        JSON.stringify(cart)
+      );
+      res.send("agregado con exito");
+    } catch (e) {
+      console.log("error desde addProductToCart", e);
     }
   }
 }
