@@ -1,1 +1,1 @@
-[{"title":"Escuadra","thumbnail":"url-de-prueba","price":"120","timestamp":"2/3/2022","stock":"20","codigo":"234234234","descripcion":"regla escuadra para el colegio","id":1},{"title":"lapiz","thumbnail":"url-de-prueba","price":"23","timestamp":"2/3/2022","stock":"23","codigo":"243534543","descripcion":"lapiz de carbon","id":2}]
+[{"title":"Escuadra","thumbnail":"url-de-prueba","price":"120","timestamp":"2/3/2022","stock":"20","codigo":"234234234","descripcion":"regla escuadra para el colegio","id":1}]

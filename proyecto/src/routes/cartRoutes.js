@@ -9,7 +9,19 @@ const {
   deleteFromCart,
 } = require("../controllers/cartControllers");
 
-router.get("/", (req, res) => {
+const isAdmin = (admin)=>{
+
+  return ((req,res,next)=>{
+      if (admin === true){
+          next();
+      } else{
+          res.send('Acceso denegado')
+      }
+  })
+}
+
+
+router.get("/",isAdmin(false), (req, res) => {
   getAll(res);
 });
 
@@ -17,11 +29,11 @@ router.post("/", (req, res) => {
   addCart(req.body, res);
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id",isAdmin(false), (req, res) => {
   deleteById(req, res);
 });
 
-router.get("/:id/productos", (req, res) => {
+router.get("/:id/productos",isAdmin(false), (req, res) => {
   searchByCart(req, res);
 });
 
