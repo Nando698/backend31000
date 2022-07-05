@@ -181,16 +181,21 @@ class Contenedor {
 
   /* METODO searchByCart */
   async searchByCart(id, res) {
-    let data = JSON.parse(
-      await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
-    );
-
     try {
+      let data = JSON.parse(
+        await fs.promises.readFile(
+          `./proyecto/src/${this.database}.txt`,
+          "utf-8"
+        )
+      );
+
+
+
       let objeto = data.find((prod) => prod.id == id);
 
-      objeto ? res.send(objeto.products) : res.send("no existe");
-    } catch (error) {
-      console.log("[[[ error en metodo getById ]]]", error);
+      objeto !== undefined ? res.send(objeto.products) : res.send("no existe");
+    } catch (e) {
+      console.log("error leyendo base de datos", e);
     }
   }
 
@@ -208,12 +213,18 @@ class Contenedor {
         )
       );
 
-      let producto = data_product.filter((prod) => prod.id == productID);
-      let cart = data_cart.filter((cart) => cart.id == cartID);
-      let index = data_cart.findIndex((x) => x.id == cartID);
+      
+      let producto = data_product[data_product.findIndex(x => x.id == productID)]
+      
+      let cart = data_cart[data_cart.findIndex(x => x.id == cartID)]
+      
 
-      data_cart[index].products.push(producto);
+      cart.products.push(producto);
+      
+      data_cart = data_cart.filter( x => x.id !== cart.id)
+          console.log('data_cart', data_cart)
       data_cart.push(cart);
+      console.log('data_cart + objeto', data_cart)
 
       await fs.promises.writeFile(
         `./proyecto/src/${this.database}.txt`,
@@ -256,6 +267,55 @@ class Contenedor {
       console.log("error desde metodo eliminar", e);
     }
   }
+
+/* METODO ADDCART */
+
+async addCart(objeto, res) {
+  let data = JSON.parse(
+    await fs.promises.readFile(`./proyecto/src/${this.database}.txt`, "utf-8")
+  );
+
+  try {
+ 
+      // Obtengo ID desde un archivo independiente
+      let id = JSON.parse(
+        await fs.promises.readFile(`./proyecto/src/${this.idDb}.txt`, "utf-8")
+      );
+      let maxID = Math.max(...id);
+      objeto.id = maxID + 1;
+      id = [...id, objeto.id];
+      await fs.promises.writeFile(
+        `./proyecto/src/${this.idDb}.txt`,
+        JSON.stringify(id)
+      );
+      
+              //Obtengo los productos del archivo
+              let productos = JSON.parse(
+                await fs.promises.readFile(
+                  `./proyecto/src/${this.database}.txt`,
+                  "utf-8"
+                )
+              );
+
+              objeto.products = []
+      
+              //Agrego el producto y reescribo el archivo
+              productos.push(objeto);
+      
+              await fs.promises.writeFile(
+                `./proyecto/src/${this.database}.txt`,
+                JSON.stringify(productos)
+              );
+      
+              res.send("Agregado exitosamente");
+            
+          } catch (error) {
+            console.log("[[[ error en metodo save ]]]", error);
+          }
+        }
+
+
+
 }
 
 module.exports = Contenedor;

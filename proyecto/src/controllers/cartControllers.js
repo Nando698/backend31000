@@ -3,7 +3,7 @@ const cart_C = new Contenedor("cartDB", "cartIds");
 
 const addCart = async (cart, res) => {
   try {
-    await cart_C.save(cart, res);
+    await cart_C.addCart(cart, res);
   } catch (e) {
     console.log("Error:", e);
   }
