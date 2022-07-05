@@ -247,11 +247,11 @@ class Contenedor {
         )
       );
 
-      let cart = data_cart.filter((cart) => cart.id == cartID);
+      let cart = data_cart[data_cart.findIndex(x => x.id == cartID)]
 
-      cart = cart.filter((x) => x.id !== productID);
+      cart.products.splice(cart.products.findIndex(x => x.id == productID), 1)
 
-      data_cart = data_cart.filter((c) => c.id !== cartID);
+      data_cart = data_cart.filter((c) => c.id !== cart.id);
 
       data_cart.push(cart);
 
