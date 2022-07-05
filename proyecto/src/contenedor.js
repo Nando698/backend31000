@@ -88,14 +88,14 @@ class Contenedor {
 
   async getAll() {
     try {
-      let productos = JSON.parse(
+      let data = JSON.parse(
         await fs.promises.readFile(
           `./proyecto/src/${this.database}.txt`,
           "utf-8"
         )
       );
 
-      return productos;
+      return data;
     } catch (error) {
       console.log("[[[ error desde metodo getAll ]]]", error);
     }
@@ -211,7 +211,7 @@ class Contenedor {
       let producto = data_product.filter((prod) => prod.id == productID);
       let cart = data_cart.filter((cart) => cart.id == cartID);
       let index = data_cart.findIndex((x) => x.id == cartID);
-      
+
       data_cart[index].products.push(producto);
       data_cart.push(cart);
 
@@ -224,6 +224,38 @@ class Contenedor {
       console.log("error desde addProductToCart", e);
     }
   }
+
+  /* METODO ELIMINAR UN PRODUCTO POR ID */
+
+  async deleteFromCart(cartID, productID, res) {
+    try {
+      let data_cart = JSON.parse(
+        await fs.promises.readFile(
+          `./proyecto/src/${this.database}.txt`,
+          "utf-8"
+        )
+      );
+
+      let cart = data_cart.filter((cart) => cart.id == cartID);
+
+      cart = cart.filter((x) => x.id !== productID);
+
+      data_cart = data_cart.filter((c) => c.id !== cartID);
+
+      data_cart.push(cart);
+
+      await fs.promises.writeFile(
+        `./proyecto/src/${this.database}.txt`,
+        JSON.stringify(data_cart)
+      );
+
+      res.send(
+        `El producto con id ${productID} ha sido eliminado del carrito nro ${cartID}`
+      );
+    } catch (e) {
+      console.log("error desde metodo eliminar", e);
+    }
+  }
 }
 
-module.exports = Contenedor
+module.exports = Contenedor;
