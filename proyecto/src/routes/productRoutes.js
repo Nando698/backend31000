@@ -23,11 +23,11 @@ router.get("/:id?", (req, res) => {
 });
 
 
-router.post('/', isAdmin(false), (req, res) => {
+router.post('/', isAdmin(true), (req, res) => {
     addProduct(req.body, res)
 })
 
-router.put('/:id', isAdmin(false), (req, res) => {
+router.put('/:id', isAdmin(true), (req, res) => {
     updateProduct(req, res)
 })
 

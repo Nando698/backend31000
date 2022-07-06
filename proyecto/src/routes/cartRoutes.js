@@ -21,7 +21,7 @@ const isAdmin = (admin)=>{
 }
 
 
-router.get("/",isAdmin(false), (req, res) => {
+router.get("/",isAdmin(true), (req, res) => {
   getAll(res);
 });
 
@@ -29,11 +29,11 @@ router.post("/", (req, res) => {
   addCart(req.body, res);
 });
 
-router.delete("/:id",isAdmin(false), (req, res) => {
+router.delete("/:id",isAdmin(true), (req, res) => {
   deleteById(req, res);
 });
 
-router.get("/:id/productos",isAdmin(false), (req, res) => {
+router.get("/:id/productos",isAdmin(true), (req, res) => {
   searchByCart(req, res);
 });
 
