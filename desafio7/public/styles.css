@@ -1,0 +1,107 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form * {
+    width: 200px;
+}
+
+body {
+    background-color: rgb(175, 186, 186);
+}
+
+nav {
+    display: inline-block;
+    width: 100%;
+    background-color: rgb(64, 40, 76);
+    box-shadow: 5px 0px 5px 5px;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    color: aliceblue;
+    display: flex;
+}
+
+
+
+.listContainer {
+    display: flex
+}
+
+.formContainer {
+    display: flex;
+}
+
+img {
+    max-width: 50px;
+}
+
+h1, h2 {
+    font-size: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(165, 42, 42, 0.16);
+    width: 200px;
+    margin: 20px;
+    border: 2px solid black;
+}
+
+#productPool {
+    display: flex;
+    flex-wrap:wrap
+}
+
+#chatWindow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    background-color: brown;
+    width: 100%;
+    height: 300px;
+}
+
+#msgPool {
+    background-color: bisque;
+    height: 60%;
+    margin: 20px 20px 40px 20px;
+    overflow: scroll;
+}
+
+#formMsj {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    align-self: center;  
+}
+
+#formMsj * {
+    height: 50px;
+}
+
+.nick {
+    color: blue;
+    font-weight: bold;
+}
+
+.dateText {
+    color: brown;
+}
+
+.msgText {
+    color: rgb(6, 141, 67);
+    font-style: italic;
+}
+
+#typingPool {
+    color: aqua;
+}

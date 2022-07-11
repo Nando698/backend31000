@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+
+    <title>Backend comision 31000</title>
+</head>
+<body>
+    
+    <form id="productForm">
+        <input type="text" name="title" placeholder="Nombre" id="title">
+        <input type="text" name="price" placeholder="precio" id="price">
+        <input type="text" name="thumbnail" placeholder="url" id="img">
+
+        <input type="submit" value="Subir producto">
+        <input type="reset" value="Limpiar">
+    </form>
+    <div id="productPool"></div>
+    
+    
+    <div id="chatWindow">
+        
+        <div id="msgPool"> 
+        </div>  
+        <div id="typingPool"></div>
+
+         
+        <form id="formMsj">
+            <input type="email" placeholder="Inserte su correo" id="mailInput" required>
+            <input type="text" placeholder="Mensaje...." id="msjInput" required>
+            <input type="submit" name="" class="btn btn-success" id="sendInput" value="Enviar">
+        </form>   
+        
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../client.js"></script>
+</body>
+</html> 
