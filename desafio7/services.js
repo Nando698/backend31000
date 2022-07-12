@@ -1,13 +1,14 @@
-const database = require('./database')
+const dblite = require('./database')
+const dbconnection = require('./database')
 
-// error.code= ER_TABLE_EXISTS_ERROR
+
 
 
 const createProductTable = async () => {
     try {
         
         
-        await database.schema.createTable('products', pTable => {
+        await dbconnection.schema.createTable('products', pTable => {
             pTable.increments('id').primary()
             pTable.string('title', 50).notNullable()
             pTable.string('thumbnail', 500).notNullable()
@@ -15,12 +16,12 @@ const createProductTable = async () => {
         })
         console.log('Product table created!')
 
-        database.destroy()
+        dbconnection.destroy()
         
 
     } catch(err) {
         console.log('error code::: ',err.code)
-        database.destroy()
+        dbconnection.destroy()
     }
 }
 
@@ -29,7 +30,7 @@ const createMsjTable = async () => {
     try {
         
         
-        await database.schema.createTable('messages', mTable => {
+        await dblite.schema.createTable('messages', mTable => {
             mTable.increments('id').primary()
             mTable.string('username', 50).notNullable()
             mTable.string('time', 50).notNullable()
@@ -37,13 +38,25 @@ const createMsjTable = async () => {
         })
         console.log('Mensaje guardado')
 
-        database.destroy()
+        dblite.destroy()
         
 
     } catch(err) {
         console.log('error code::: ',err.code)
-        database.destroy()
+        dblite.destroy()
     }
 }
+
+const deleteTable = async table => {
+    try{
+
+        dblite.schema.dropTable(table)
+
+    }catch(e){
+        console.log('desde delete', e)
+    }
+}
+
+
 
 module.exports = {createProductTable, createMsjTable}

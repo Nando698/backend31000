@@ -1,4 +1,6 @@
 const knex = require('knex')
+const path = require('path')
+
 const conf = {
   client: "mysql",
   connection: {
@@ -9,6 +11,18 @@ const conf = {
   },
   pool: { min: 0, max: 7 },
 }
-const dbconnection = knex(conf)
 
-module.exports = dbconnection
+
+const confSQLITE = {
+  client: "sqlite3",
+  connection: { filename: path.join(__dirname, './DB/msj.db')  },
+  useNullAsDefault: true
+}
+
+
+
+
+const dbconnection = knex(conf)
+const dblite = knex(confSQLITE)
+
+module.exports = {dbconnection, dblite}

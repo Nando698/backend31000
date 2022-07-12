@@ -1,37 +1,48 @@
-const dbconnection = require("./database");
+const db = require("./database");
+const services = require('./services')
 
-const createMsjTable = require("./services");
 
-class Contenedor {
-    constructor(config, table) {
-      
-    }
-
-// Guardar mensaje
-
-    async save(message) {
-      try{
-         
-        
-        const msj = `FechaYHora: ${message.time}, UserName: ${message.username}, Mensaje: ${message.message}\n`;
-          await fs.promises.appendFile(`./desafio6/chat.txt`, msj);
-          console.log("Mensaje guardado correctamente")
-      
-      
-        } catch(error) {
-          console.log(`Ocurrio el siguiente error al guardar el mensaje: ${error}`)
-      }
+class MsjClass {
+  constructor(config, table) {
+    this.config = config
+    this.table = table;
   }
 
+  // Guardar mensaje
 
-//Obtener mensajes
+  async save(message) {
+    try {
+      await this.config(`${this.table}`).insert(message);
+    } catch (error) {
+      if (error.code == "ER_NO_SUCH_TABLE") {
+        services.createMsjTable();
+      } else {
+        console.log(
+          `Ocurrio el siguiente error al guardar el mensaje: ${error}`
+        );
+      }
+    }
+  }
 
-  async getAll () {
-    //leo el archivo y lo guardo en una variable que luego retorno
-    let listadoMsg = JSON.parse(await fs.promises.readFile(`./${this.archivo}.txt`, 'utf-8'));
-    console.log("Listado de mensajes: ", listadoMsg);
-    return listadoMsg;
+  //Obtener mensajes
+
+  async getAll() {
+    try{
+
+    const allMesages = await this.config.from(`${this.table}`).select("*");
+
+    return allMesages;
+
+  } catch (error) {
+    if (error.code == "ER_NO_SUCH_TABLE") {
+      services.createMsjTable();
+    } else {
+      console.log(
+        `Ocurrio el siguiente error al recuperar los mensajes: ${error}`
+      );
+    }
+  }
+  }
 }
-}
 
-  module.exports = Contenedor
+module.exports = MsjClass;
