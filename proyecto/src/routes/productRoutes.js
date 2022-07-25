@@ -1,8 +1,8 @@
-const { Router } = require("express");
+import { Router } from "express"
 const router = Router();
-const { getAll, getById, addProduct, updateProduct, deleteById} = require("../controllers/prodControllers");
+import { getAll, getById, addProduct, updateProduct, deleteById} from "../controllers/prodControllers.js";
 
-const Contenedor = require("../contenedor.js");
+import Contenedor from "../contenedor.js";
 const products_C = new Contenedor("productDB", "productsIds");
 
 const isAdmin = (admin)=>{
@@ -35,4 +35,6 @@ router.delete('/:id',isAdmin(true),  (req, res) => {
     deleteById(req, res)
 })
 
-module.exports = router;
+export default router
+
+

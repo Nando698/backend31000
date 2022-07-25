@@ -1,27 +1,29 @@
-const { Router } = require("express");
+import {
+  Router
+} from "express"
 const router = Router();
-const {
+import {
   addCart,
   getAll,
   deleteById,
   searchByCart,
   addProductToCart,
   deleteFromCart,
-} = require("../controllers/cartControllers");
+} from "../controllers/cartControllers.js";
 
-const isAdmin = (admin)=>{
+const isAdmin = (admin) => {
 
-  return ((req,res,next)=>{
-      if (admin === true){
-          next();
-      } else{
-          res.send('Acceso denegado')
-      }
+  return ((req, res, next) => {
+    if (admin === true) {
+      next();
+    } else {
+      res.send('Acceso denegado')
+    }
   })
 }
 
 
-router.get("/",isAdmin(true), (req, res) => {
+router.get("/", isAdmin(true), (req, res) => {
   getAll(res);
 });
 
@@ -29,11 +31,11 @@ router.post("/", (req, res) => {
   addCart(req.body, res);
 });
 
-router.delete("/:id",isAdmin(true), (req, res) => {
+router.delete("/:id", isAdmin(true), (req, res) => {
   deleteById(req, res);
 });
 
-router.get("/:id/productos",isAdmin(true), (req, res) => {
+router.get("/:id/productos", isAdmin(true), (req, res) => {
   searchByCart(req, res);
 });
 
@@ -45,4 +47,4 @@ router.delete("/:id/productos/:id_prod", (req, res) => {
   deleteFromCart(req, res);
 });
 
-module.exports = router;
+export default router

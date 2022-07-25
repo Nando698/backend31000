@@ -1,4 +1,4 @@
-const Contenedor = require("../contenedor");
+import Contenedor from "../contenedor.js";
 const cart_C = new Contenedor("cartDB", "cartIds");
 
 const addCart = async (cart, res) => {
@@ -49,7 +49,7 @@ const deleteFromCart = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   addCart,
   getAll,
   deleteById,
@@ -57,3 +57,4 @@ module.exports = {
   addProductToCart,
   deleteFromCart,
 };
+

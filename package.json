@@ -2,9 +2,10 @@
   "name": "backend31000",
   "version": "1.0.0",
   "description": "",
+  "type" : "module",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./desafio7/server.js"
+    "start": "nodemon ./proyecto/src/server.js"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,10 @@
-const express = require('express');
+import express  from 'express';
 const app = express();
-const cartRoutes = require('./routes/cartRoutes')
-const productRoutes = require('./routes/productRoutes')
+
+import router from './routes/cartRoutes.js';
+
+import router from './routes/productRoutes.js';
+
 const port = process.env.port || 8080;
 
 //conf para acceder al body
@@ -19,6 +22,6 @@ app.get('/', (req, res) => {
     res.send('HOME')
 })
 
-app.use('/api/cart', cartRoutes)
+app.use('/api/cart', router)
 
 app.use('/api/products', productRoutes)

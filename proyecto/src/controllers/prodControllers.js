@@ -1,4 +1,4 @@
-const Contenedor = require("../contenedor.js");
+import Contenedor from "../contenedor.js";
 const products_C = new Contenedor("productDB", "productIds");
 
 
@@ -31,4 +31,4 @@ const deleteById = async (req, res) => {
 
 
 
-module.exports = {getAll, getById, addProduct, updateProduct, deleteById}
+export {getAll, getById, addProduct, updateProduct, deleteById}

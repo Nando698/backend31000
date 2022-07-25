@@ -1,4 +1,4 @@
-const fs = require("fs");
+import * as fs from 'fs';
 
 class Contenedor {
   constructor(database, idDb) {
@@ -318,4 +318,4 @@ async addCart(objeto, res) {
 
 }
 
-module.exports = Contenedor;
+export default Contenedor
