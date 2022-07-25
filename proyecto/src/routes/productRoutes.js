@@ -1,5 +1,5 @@
 import { Router } from "express"
-const router = Router();
+const routerProd = Router();
 import { getAll, getById, addProduct, updateProduct, deleteById} from "../controllers/prodControllers.js";
 
 import Contenedor from "../contenedor.js";
@@ -16,25 +16,25 @@ const isAdmin = (admin)=>{
     })
   }
 
-router.get("/:id?", (req, res) => {
+routerProd.get("/:id?", (req, res) => {
   const { id } = req.params;
 
   id ? getById(req.params.id, res) : getAll(res);
 });
 
 
-router.post('/', isAdmin(true), (req, res) => {
+routerProd.post('/', isAdmin(true), (req, res) => {
     addProduct(req.body, res)
 })
 
-router.put('/:id', isAdmin(true), (req, res) => {
+routerProd.put('/:id', isAdmin(true), (req, res) => {
     updateProduct(req, res)
 })
 
-router.delete('/:id',isAdmin(true),  (req, res) => {
+routerProd.delete('/:id',isAdmin(true),  (req, res) => {
     deleteById(req, res)
 })
 
-export default router
+export default routerProd
 
 

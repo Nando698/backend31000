@@ -1,9 +1,9 @@
 import express  from 'express';
 const app = express();
 
-import router from './routes/cartRoutes.js';
+import routerCart from './routes/cartRoutes.js';
 
-import router from './routes/productRoutes.js';
+import routerProd from './routes/productRoutes.js';
 
 const port = process.env.port || 8080;
 
@@ -22,6 +22,6 @@ app.get('/', (req, res) => {
     res.send('HOME')
 })
 
-app.use('/api/cart', router)
+app.use('/api/cart', routerCart)
 
-app.use('/api/products', productRoutes)
+app.use('/api/products', routerProd)
