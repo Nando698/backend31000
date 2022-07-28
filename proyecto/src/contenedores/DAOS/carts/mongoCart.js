@@ -1,12 +1,12 @@
-import ContenedorMongo from "../../contenedorMongo";
+import ContenedorMongo from "../../contenedorMongo.js";
 
-class CarritoDaoMongo extends ContenedorMongo {
+class Dao_productMongo extends ContenedorMongo {
   constructor() {
-    super("carritos", {
+    super("carts", {
       timestamp: { type: String, required: true },
       productos: { type: Array, required: true },
     });
   }
 }
 
-export default CarritoDaoMongo;
+export default Dao_productMongo;

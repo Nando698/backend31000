@@ -1,8 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express  from 'express';
 const app = express();
 
-import dotenv from "dotenv";
-dotenv.config();
 
 
 
@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en puerto ${port}`)
+    console.log(process.env.PORT);
 });
 
 

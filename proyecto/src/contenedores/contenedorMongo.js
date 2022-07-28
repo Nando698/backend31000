@@ -1,4 +1,7 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
+import {mongoConnect} from '../config/mongooseCFG.js'
+
+mongoConnect()
 
 class ContenedorMongo {
   constructor(nombreColeccion, schema) {
@@ -6,64 +9,70 @@ class ContenedorMongo {
     
   }
 
-  /* METODO SAVE */
-
-  async save(objeto, res) {
-
-  }
-
   /* METODO GET BY ID */
 
   async getById(id) {
-   
+    
+    
+    try{
+    const doc = await this.collection.findById(id, { __v: 0 });
+    return doc;
+    }catch(e){
+      return 'no se ha podido encontrar'
+    }
   }
 
   /* METODO GETALL */
 
   async getAll() {
-   
+    const docs = await this.collection.find({}, { __v: 0 });
+    return docs;
   }
 
   /* METODO DELETE BY ID */
 
-  async deleteById(id, res) {
-  
+  async deleteById(id) {
+    try{
+
+      await this.collection.deleteOne({'_id': id })
+        
+      return 'Producto eliminado'
+      }catch(e){
+        console.log('No se ha podido eliminar', e);
+      }
   }
 
-  /* METODO DELETE ALL */
-
-  async deleteAll() {
-    
-  }
 
   /* METODO UPDATE */
 
-  async updateProduct(product, id, res) {
-   
+  async update(id, product) {
+    
+    
+    try{
+
+    await this.collection.updateOne({'_id': id }, product)
+      
+    return 'Producto actualizado'
+    }catch(e){
+      console.log('No se ha podido actualizar', e);
+    }
   }
 
-  /* METODO searchByCart */
-  async searchByCart(id, res) {
+/* METODO ADD */
+
+async add(objeto) {
+  try {
+  objeto.timestamp = new Date().toLocaleString("fr-FR");
+    const nuevoElemento = new this.collection(objeto);
+    let nuevoElementoGuardado = await nuevoElemento.save();
+    return nuevoElementoGuardado;
+  }catch(e){
+    return 'los datos no son correctos';
+  }
+  
+  
   
   }
-
-  /* METODO AGREGAR PRODUCTO AL CARRITO */
-
-  async addProductToCart(cartID, productID, res) {
- 
-  }
-
-  /* METODO ELIMINAR UN PRODUCTO POR ID */
-
-  async deleteFromCart(cartID, productID, res) {
-
-  }
-
-/* METODO ADDCART */
-
-async addCart(objeto, res) {
- 
-        }
 
 
 

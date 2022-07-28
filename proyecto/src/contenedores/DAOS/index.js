@@ -4,29 +4,29 @@ dotenv.config();
 let Dao_product;
 let Dao_cart;
 
-switch ('firebase') {
+switch (process.env.DATABASE || 'mongo') {
   case "firebase":
     const { default: Dao_productFirebase } = await import(
       "./products/fireProducts.js"
     );
-    const { default: dao_cartFirebase } = await import(
+    const { default: Dao_cartFirebase } = await import(
       "./carts/fireCart.js"
     );
 
-    Dao_product = Dao_productFirebase;
-    Dao_cart = dao_cartFirebase;
+    Dao_product = new Dao_productFirebase;
+    Dao_cart = new Dao_cartFirebase;
 
     break;
   case "mongo":
-    const { default: dao_productMongo } = await import(
+    const { default: Dao_productMongo } = await import(
       "./products/mongoProducts.js"
     );
-    const { default: dao_cartMongo } = await import(
+    const { default: Dao_cartMongo } = await import(
       "./carts/mongoCart.js"
     );
 
-    dao_product = dao_productMongo;
-    dao_cart = dao_cartMongo;
+    Dao_product = new Dao_productMongo;
+    Dao_cart = new Dao_cartMongo;
 
     break;
 }

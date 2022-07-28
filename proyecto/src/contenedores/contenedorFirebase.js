@@ -2,87 +2,93 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import database from '../config/firebase.js'
-import { doc, getDoc, getDocs ,collection } from "firebase/firestore";
+import { doc, getDoc, getDocs ,collection, deleteDoc, updateDoc, addDoc} from "firebase/firestore";
 
 class ContenedorFirebase {
   constructor(collection) {
-    this.database = database.collection(collection);
-    
-  }
-
-  /* METODO SAVE */
-
-  async save(objeto, res) {
-
+    this.col = collection
+    this.elemento = this.col == 'products' ? 'Pooducto' : 'Carrito'
   }
 
   /* METODO GET BY ID */
 
   async getById(id) {
-   
+    
+    const docRef = doc(database, "products", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data()
+    } else {
+      return 'No existe'
+    }
   }
 
   /* METODO GETALL */
 
   async getAll() {
-    console.log('asdasdasdas')
-/*     const iCollection = collection(database,this.database)
+    
+    const iCollection = collection(database,this.col)
     const productsSnap = await getDocs(iCollection)
-    const productList = productsSnap.docs.map((doc) => {
+    const productList =  productsSnap.docs.map((doc) => {
       let product = doc.data()
       product.id = doc.id
 
       return product
     })
 
-    return productList */
+    return productList
   }
 
+  
+  
   /* METODO DELETE BY ID */
 
-  async deleteById(id, res) {
+  async deleteById(id) {
+
+    const docRef = doc(database, this.col, id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) { 
+
+    await deleteDoc(doc(database, this.col, id))
   
-  }
-
-  /* METODO DELETE ALL */
-
-  async deleteAll() {
-    
+    return `${this.elemento} con id ${id}, eliminado`
+    }else{
+      return 'Producto inexistente'
+    }
   }
 
   /* METODO UPDATE */
 
-  async updateProduct(product, id, res) {
+  async update(id, product) {
+
+    const docRef = doc(database, this.col, id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
    
+      const docRef = doc(database, this.col, id);
+      updateDoc(docRef, product)
+
+    return `Producto con id ${id} actualizado`
+
+
+    }else{
+      return 'Ese producto no existe'
+    }
   }
 
-  /* METODO searchByCart */
-  async searchByCart(id, res) {
   
-  }
-
-  /* METODO AGREGAR PRODUCTO AL CARRITO */
-
-  async addProductToCart(cartID, productID, res) {
- 
-  }
-
-  /* METODO ELIMINAR UN PRODUCTO POR ID */
-
-  async deleteFromCart(cartID, productID, res) {
-
-  }
-
-
-  /* METODO ADDCART */
+  /* METODO ADD */
   
-  async addCart(objeto, res) {
+  async add(objeto) {
     try{
   
-      const orderFirebase = collection(database, "products");
+      const orderFirebase = collection(database, this.col);
       await addDoc(orderFirebase, objeto);
   
-      res.send('Agregado')
+      return 'Producto agregado'
   
   
     }catch(e){
