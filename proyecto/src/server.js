@@ -1,11 +1,16 @@
 import express  from 'express';
 const app = express();
 
-import routerCart from './routes/cartRoutes.js';
+import dotenv from "dotenv";
+dotenv.config();
 
-import routerProd from './routes/productRoutes.js';
 
-const port = process.env.port || 8080;
+
+import router from './routes/routes.js';
+
+
+
+const port = process.env.PORT || 3000;
 
 //conf para acceder al body
 app.use(express.json());
@@ -19,9 +24,8 @@ app.listen(port, () => {
 
 
 app.get('/', (req, res) => {
-    res.send('HOME')
+    res.send('las rutas comienzan con " /api " !!')
 })
 
-app.use('/api/cart', routerCart)
+app.use('/api/', router)
 
-app.use('/api/products', routerProd)

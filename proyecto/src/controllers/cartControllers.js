@@ -1,5 +1,5 @@
-import Contenedor from "../contenedor.js";
-const cart_C = new Contenedor("cartDB", "cartIds");
+import ContenedorFire from "../contenedores/contenedorFirebase.js";
+const cart_C = new ContenedorFire("cartDB", "cartIds");
 
 const addCart = async (cart, res) => {
   try {
